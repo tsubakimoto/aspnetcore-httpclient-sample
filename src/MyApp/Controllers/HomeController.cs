@@ -20,9 +20,15 @@ namespace MyApp.Controllers
 
         public async Task<IActionResult> Hoge()
         {
-            var client = httpClientFactory.CreateClient();
-            var result = await client.GetStringAsync("https://docs.microsoft.com/ja-jp/aspnet/");
-            return Content(result);
+            // using directory
+            var defaultClient = httpClientFactory.CreateClient();
+            var defaultResult = await defaultClient.GetStringAsync("https://docs.microsoft.com/ja-jp/aspnet/");
+
+            // using named clients
+            var docsClient = httpClientFactory.CreateClient("docs");
+            var docsResult = await docsClient.GetStringAsync("/ja-jp/aspnet/");
+
+            return Content(docsResult);
         }
 
         public IActionResult Index()
