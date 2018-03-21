@@ -12,10 +12,12 @@ namespace MyApp.Controllers
     public class HomeController : Controller
     {
         private readonly IHttpClientFactory httpClientFactory;
+        private readonly DocsService docsService;
 
-        public HomeController(IHttpClientFactory httpClientFactory)
+        public HomeController(IHttpClientFactory httpClientFactory, DocsService docsService)
         {
             this.httpClientFactory = httpClientFactory;
+            this.docsService = docsService;
         }
 
         public async Task<IActionResult> Hoge()
@@ -28,7 +30,10 @@ namespace MyApp.Controllers
             var docsClient = httpClientFactory.CreateClient("docs");
             var docsResult = await docsClient.GetStringAsync("/ja-jp/aspnet/");
 
-            return Content(docsResult);
+            // using typed clients
+            var docsResult2 = await docsService.Client.GetStringAsync("/ja-jp/aspnet/");
+
+            return Content(docsResult2);
         }
 
         public IActionResult Index()

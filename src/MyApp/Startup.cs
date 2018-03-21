@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyApp.Models;
 
 namespace MyApp
 {
@@ -29,6 +30,9 @@ namespace MyApp
 
             // using directory
             services.AddHttpClient();
+
+            // using typed clients
+            services.AddHttpClient<DocsService>();
 
             services.AddMvc();
         }
